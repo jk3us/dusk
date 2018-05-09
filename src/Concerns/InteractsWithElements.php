@@ -213,7 +213,10 @@ trait InteractsWithElements
         $options = $element->findElements(WebDriverBy::tagName('option'));
 
         if (is_null($value)) {
-            $options[array_rand($options)]->click();
+            do {
+                $option = $options[array_rand($options)];
+            } while ($option->getAttribute('value') == '');
+            $option->click();
         } else {
             foreach ($options as $option) {
                 if ((string) $option->getAttribute('value') === (string) $value) {
